@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Oauth from '../components/Oauth';
 import { Link, useNavigate } from 'react-router-dom'; // Change useHistory to useNavigate
 function SignupForm() {
   const [formData, setFormData] = useState({
@@ -108,6 +109,9 @@ function SignupForm() {
         >
           {loading ? 'Signing Up...' : 'Sign Up'}
         </button>
+        <div className="mt-4">
+          <Oauth />
+        </div>
         <div className="mt-4 text-center">
           <p className="text-gray-600">
             Have an account?{' '}

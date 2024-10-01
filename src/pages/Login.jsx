@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart, signInFailure, signInSuccess } from '../Redux/user/userSlice';
+import Oauth from '../components/Oauth';
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -94,11 +95,14 @@ function LoginForm() {
 
         <button
           type="submit"
-          className={`w-full py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase ${loading ? 'bg-gray-400' : 'bg-slate-700 hover:bg-slate-600'}`}
+          className={`w-full py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 uppercase ${loading ? 'bg-gray-400' : 'bg-slate-700 hover:bg-slate-600'} `}
           disabled={loading}
         >
           {loading ? 'Logging In...' : 'Login'}
         </button>
+        <div className="mt-4">
+          <Oauth />
+        </div>
 
         <div className="mt-4 text-center">
           <p className="text-gray-600">
