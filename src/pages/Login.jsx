@@ -36,6 +36,8 @@ function LoginForm() {
 
       const data = await res.json();
       console.log('API Response:', data); // Debugging API response
+      console.log("Debugging API response",data);
+      
       dispatch(signInSuccess(data));  // Dispatch success with user data
       console.log('Navigating to home page'); // Log before navigation
       navigate('/');
