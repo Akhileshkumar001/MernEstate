@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Oauth from '../components/Oauth';
-import { Link, useNavigate } from 'react-router-dom'; // Change useHistory to useNavigate
+import { Link, useNavigate } from 'react-router-dom'; 
 function SignupForm() {
   const [formData, setFormData] = useState({
     username: '',

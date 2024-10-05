@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { signInStart, signInFailure, signInSuccess } from '../Redux/user/userSlice';
 import Oauth from '../components/Oauth';
 
+
 function LoginForm() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({});
 
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -23,35 +21,36 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signInStart());
 
     try {
+     dispatch(signInStart());
       const res = await fetch('http://localhost:3000/auth/v1/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        
       });
 
       const data = await res.json();
-      console.log('API Response:', data); // Debugging API response
-      console.log("Debugging API response",data);
-      
-      dispatch(signInSuccess(data));  // Dispatch success with user data
-      console.log('Navigating to home page'); // Log before navigation
-      navigate('/');
-
-      if (!data.success) {  // Check for error response
-        dispatch(signInFailure(data.message)); // Dispatch error to Redux
+      if (data.success === false) {
+        dispatch(signInFailure(data.message));
         return;
       }
-
-      // Handle successful sign-in
-       // Navigate to the home page on success
+      const{token, ...dataWithoutToken} = data;
+      console.log('API Response:',dataWithoutToken ); 
+     
+      if(token){
+        localStorage.setItem('authToken', token);
+        // console.log('Token saved in localStorage:', token);
+      }
+      dispatch(signInSuccess(dataWithoutToken.user));  
+      console.log('Navigating to home page'); 
+      navigate('/');
     } catch (error) {
       dispatch(signInFailure('An error occurred. Please try again.'));  // Dispatch error message to Redux
-      console.error('Fetch error:', error); // Log any fetch error
+      console.error('Fetch error:', error); 
     }
   };
 
